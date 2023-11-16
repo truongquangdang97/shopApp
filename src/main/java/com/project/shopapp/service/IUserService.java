@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
 public interface IUserService {
     User createUser(UserDTO userDTO);
 
-    String login(String phoneNumber, String password);
+    String login(String phoneNumber, String password) throws Exception;
 }

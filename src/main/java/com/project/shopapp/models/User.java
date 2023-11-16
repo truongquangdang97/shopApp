@@ -42,10 +42,10 @@ public class User implements UserDetails{
     private Boolean active;
 
     @Column(name = "face_account_id")
-    private String faceAccountId;
+    private int faceAccountId;
 
     @Column(name = "google_account_id")
-    private String googleAccountId;
+    private int googleAccountId;
 
     @JoinColumn(name = "role_id")
     @ManyToOne
@@ -54,7 +54,8 @@ public class User implements UserDetails{
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorrityList = new ArrayList<>();   
-        authorrityList.add(new SimpleGrantedAuthority("ROLE_"+getRole().getName()));
+        // authorrityList.add(new SimpleGrantedAuthority("ROLE_"+getRole().getName()));
+        authorrityList.add(new SimpleGrantedAuthority("ROLE_USER"));
         return authorrityList;     
     }
 

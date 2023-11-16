@@ -11,6 +11,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/users")
@@ -40,7 +41,7 @@ public class UserController {
         }
     }
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(
+    public ResponseEntity<String> loginUser(
             @Valid @RequestBody UserLoginDTO userLoginDTO,
             BindingResult result
     ){
@@ -49,10 +50,14 @@ public class UserController {
                     .stream()
                     .map(FieldError::getDefaultMessage)
                     .toList();
-            return  ResponseEntity.badRequest().body(errorMessages);
+            return  ResponseEntity.badRequest().body("k nhap du");
         }
-        return ResponseEntity.ok("login successfully");
-
+        try{
+            String token = userService.login(userLoginDTO.getPhoneNumber(), userLoginDTO.getPassword());
+            return ResponseEntity.ok(token);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
-
+ 
 }
